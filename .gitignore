@@ -1,0 +1,4 @@
+/build/
+/candidates/
+__pycache__/
+*.pyc

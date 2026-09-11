@@ -1,0 +1,47 @@
+diff --git a/src/main/java/com/fruitfly/brain/LifNetwork.java b/src/main/java/com/fruitfly/brain/LifNetwork.java
+index 9715832..5098588 100644
+--- a/src/main/java/com/fruitfly/brain/LifNetwork.java
++++ b/src/main/java/com/fruitfly/brain/LifNetwork.java
+@@ -32,6 +32,7 @@ public final class LifNetwork {
+     private final float decay;            // exp(-dt/tau)
+     private final float vRest, vThr, vReset, idleEps;
+     private final float[] preScale;       // per presynaptic neuron: sign * wSyn * gain (* inhGain)
++    private final boolean[] outputSilenced; // spikes are recorded, but outgoing transmission is suppressed
+     private final float maxJump;
+     private final float[] g;              // synaptic drive variable (mV), null in delta-synapse mode
+     private final boolean expSyn;
+@@ -92,6 +93,7 @@ public final class LifNetwork {
+         this.idleEps = (float) this.cfg.idleEpsMv;
+         this.maxJump = (float) this.cfg.maxJumpMv;
+         this.preScale = new float[n];
++        this.outputSilenced = new boolean[n];
+         for (int i = 0; i < n; i++) {
+             int s = c.ntSign[i];
+             double scale = s * this.cfg.wSynMv * this.cfg.gain;
+@@ -224,6 +226,17 @@ public final class LifNetwork {
+     /** Current postsynaptic input scaling of neuron i (1 = literal). */
+     public float postsynapticGain(int i) { return inScale == null ? 1f : inScale[i]; }
+ 
++    /**
++     * Suppress or restore outgoing synaptic transmission for the given neurons.
++     * Silenced neurons continue to integrate and their spikes remain observable.
++     */
++    public void setOutputSilenced(int[] ids, boolean silenced) {
++        for (int i : ids) outputSilenced[i] = silenced;
++    }
++
++    /** True when neuron i still spikes but does not transmit to postsynaptic targets. */
++    public boolean outputSilenced(int i) { return outputSilenced[i]; }
++
+     // ------------------------------------------------------------------ stepping
+ 
+     /** Advance one integration step (cfg.dtMs). */
+@@ -401,7 +414,7 @@ public final class LifNetwork {
+             }
+         }
+         final float scale = preScale[i];
+-        if (scale == 0f) return; // neuromodulatory / unknown transmitter: no fast synaptic effect
++        if (scale == 0f || outputSilenced[i]) return; // no fast synaptic effect, or explicit output intervention
+         final int writeSlot = (int) ((stepIndex + delaySteps) % slots);
+         final float[] out = delayBuf[writeSlot];
+         final int[] post = c.postIdx;
