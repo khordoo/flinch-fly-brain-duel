@@ -1,4 +1,4 @@
-# FLINCH — You vs. a simulated fly brain
+# FLINCH: You vs. a simulated fly brain
 
 A playable escape duel against a connectome-based fly model, with an interactive normal/silenced circuit replay. Local demo; nothing is posted or deployed.
 
