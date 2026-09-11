@@ -1,0 +1,141 @@
++ sh gradlew classes --console=plain
+
+> Configure project :
+Fabric Loom: 1.12.7
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+
+[Incubating] Problems report is available at: file:///Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/candidates/fly-brain-minecraft/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.1.0/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 720ms
+2 actionable tasks: 2 up-to-date
++ /opt/homebrew/opt/openjdk/bin/javac --release 21 -cp /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/candidates/fly-brain-minecraft/build/classes/java/main -d /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/build/feasibility/adapter-classes /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/adapter/src/com/fruitfly/flinch/FlinchTraceAdapter.java
++ /opt/homebrew/opt/openjdk/bin/java -cp /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/build/feasibility/adapter-classes:/Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/candidates/fly-brain-minecraft/build/classes/java/main:/Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/candidates/fly-brain-minecraft/build/resources/main com.fruitfly.flinch.FlinchTraceAdapter /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/candidates/fly-brain-minecraft/src/main/resources/connectome/malecns-v1.0.flyb.gz /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/build/feasibility/fixtures.tsv /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/evidence/traces 6cfa30175003ef25da68a237d5eda958f8047b82 e33df182bed7a6f3ea279daf4790a82b05706d3d41e819a6a80c0473e8c559f3 cc93a21360489eb113e55a3450dd15960dadb1f038a67adf15e1523b695fdb3d flinch-geometry-v1
+  1/100 course-01 seed=41001 baseline escape=110.500 wall=900.0ms
+  2/100 course-01 seed=41001 sensory_outputs_silenced escape=null wall=486.7ms
+  3/100 course-01 seed=41002 baseline escape=113.000 wall=714.2ms
+  4/100 course-01 seed=41002 sensory_outputs_silenced escape=null wall=456.5ms
+  5/100 course-01 seed=41003 baseline escape=113.000 wall=777.9ms
+  6/100 course-01 seed=41003 sensory_outputs_silenced escape=null wall=446.6ms
+  7/100 course-01 seed=41004 baseline escape=111.500 wall=718.6ms
+  8/100 course-01 seed=41004 sensory_outputs_silenced escape=null wall=443.7ms
+  9/100 course-01 seed=41005 baseline escape=111.500 wall=695.0ms
+ 10/100 course-01 seed=41005 sensory_outputs_silenced escape=null wall=454.1ms
+ 11/100 course-02 seed=41001 baseline escape=110.500 wall=732.8ms
+ 12/100 course-02 seed=41001 sensory_outputs_silenced escape=null wall=548.3ms
+ 13/100 course-02 seed=41002 baseline escape=112.500 wall=720.7ms
+ 14/100 course-02 seed=41002 sensory_outputs_silenced escape=null wall=546.1ms
+ 15/100 course-02 seed=41003 baseline escape=113.500 wall=722.7ms
+ 16/100 course-02 seed=41003 sensory_outputs_silenced escape=null wall=538.8ms
+ 17/100 course-02 seed=41004 baseline escape=111.500 wall=839.2ms
+ 18/100 course-02 seed=41004 sensory_outputs_silenced escape=null wall=572.2ms
+ 19/100 course-02 seed=41005 baseline escape=111.000 wall=732.0ms
+ 20/100 course-02 seed=41005 sensory_outputs_silenced escape=null wall=589.2ms
+ 21/100 course-03 seed=41001 baseline escape=110.500 wall=732.9ms
+ 22/100 course-03 seed=41001 sensory_outputs_silenced escape=null wall=581.0ms
+ 23/100 course-03 seed=41002 baseline escape=111.000 wall=721.7ms
+ 24/100 course-03 seed=41002 sensory_outputs_silenced escape=null wall=612.5ms
+ 25/100 course-03 seed=41003 baseline escape=111.000 wall=711.9ms
+ 26/100 course-03 seed=41003 sensory_outputs_silenced escape=null wall=585.1ms
+ 27/100 course-03 seed=41004 baseline escape=111.000 wall=724.5ms
+ 28/100 course-03 seed=41004 sensory_outputs_silenced escape=null wall=803.4ms
+ 29/100 course-03 seed=41005 baseline escape=111.000 wall=714.6ms
+ 30/100 course-03 seed=41005 sensory_outputs_silenced escape=null wall=594.0ms
+ 31/100 course-04 seed=41001 baseline escape=111.000 wall=798.4ms
+ 32/100 course-04 seed=41001 sensory_outputs_silenced escape=null wall=663.0ms
+ 33/100 course-04 seed=41002 baseline escape=113.000 wall=778.4ms
+ 34/100 course-04 seed=41002 sensory_outputs_silenced escape=null wall=1115.1ms
+ 35/100 course-04 seed=41003 baseline escape=113.000 wall=750.9ms
+ 36/100 course-04 seed=41003 sensory_outputs_silenced escape=null wall=654.7ms
+ 37/100 course-04 seed=41004 baseline escape=112.000 wall=766.9ms
+ 38/100 course-04 seed=41004 sensory_outputs_silenced escape=null wall=670.9ms
+ 39/100 course-04 seed=41005 baseline escape=112.500 wall=742.8ms
+ 40/100 course-04 seed=41005 sensory_outputs_silenced escape=null wall=1058.9ms
+ 41/100 course-05 seed=41001 baseline escape=112.500 wall=737.5ms
+ 42/100 course-05 seed=41001 sensory_outputs_silenced escape=null wall=673.8ms
+ 43/100 course-05 seed=41002 baseline escape=112.500 wall=747.1ms
+ 44/100 course-05 seed=41002 sensory_outputs_silenced escape=null wall=684.4ms
+ 45/100 course-05 seed=41003 baseline escape=112.000 wall=770.2ms
+ 46/100 course-05 seed=41003 sensory_outputs_silenced escape=null wall=679.7ms
+ 47/100 course-05 seed=41004 baseline escape=112.500 wall=753.9ms
+ 48/100 course-05 seed=41004 sensory_outputs_silenced escape=null wall=689.9ms
+ 49/100 course-05 seed=41005 baseline escape=113.000 wall=747.0ms
+ 50/100 course-05 seed=41005 sensory_outputs_silenced escape=null wall=689.1ms
+ 51/100 course-06 seed=41001 baseline escape=111.500 wall=744.3ms
+ 52/100 course-06 seed=41001 sensory_outputs_silenced escape=null wall=680.5ms
+ 53/100 course-06 seed=41002 baseline escape=112.000 wall=808.2ms
+ 54/100 course-06 seed=41002 sensory_outputs_silenced escape=null wall=1165.7ms
+ 55/100 course-06 seed=41003 baseline escape=112.500 wall=740.4ms
+ 56/100 course-06 seed=41003 sensory_outputs_silenced escape=null wall=673.5ms
+ 57/100 course-06 seed=41004 baseline escape=111.500 wall=715.0ms
+ 58/100 course-06 seed=41004 sensory_outputs_silenced escape=null wall=657.8ms
+ 59/100 course-06 seed=41005 baseline escape=113.000 wall=735.1ms
+ 60/100 course-06 seed=41005 sensory_outputs_silenced escape=null wall=920.2ms
+ 61/100 course-07 seed=41001 baseline escape=112.500 wall=757.0ms
+ 62/100 course-07 seed=41001 sensory_outputs_silenced escape=null wall=713.9ms
+ 63/100 course-07 seed=41002 baseline escape=113.000 wall=773.3ms
+ 64/100 course-07 seed=41002 sensory_outputs_silenced escape=null wall=847.7ms
+ 65/100 course-07 seed=41003 baseline escape=112.000 wall=1005.2ms
+ 66/100 course-07 seed=41003 sensory_outputs_silenced escape=null wall=855.4ms
+ 67/100 course-07 seed=41004 baseline escape=112.500 wall=755.7ms
+ 68/100 course-07 seed=41004 sensory_outputs_silenced escape=null wall=668.7ms
+ 69/100 course-07 seed=41005 baseline escape=113.000 wall=798.6ms
+ 70/100 course-07 seed=41005 sensory_outputs_silenced escape=null wall=715.5ms
+ 71/100 course-08 seed=41001 baseline escape=110.500 wall=748.7ms
+ 72/100 course-08 seed=41001 sensory_outputs_silenced escape=null wall=740.1ms
+ 73/100 course-08 seed=41002 baseline escape=111.000 wall=932.9ms
+ 74/100 course-08 seed=41002 sensory_outputs_silenced escape=null wall=1170.3ms
+ 75/100 course-08 seed=41003 baseline escape=112.500 wall=949.7ms
+ 76/100 course-08 seed=41003 sensory_outputs_silenced escape=null wall=708.2ms
+ 77/100 course-08 seed=41004 baseline escape=110.500 wall=749.3ms
+ 78/100 course-08 seed=41004 sensory_outputs_silenced escape=null wall=1084.2ms
+ 79/100 course-08 seed=41005 baseline escape=112.500 wall=741.4ms
+ 80/100 course-08 seed=41005 sensory_outputs_silenced escape=null wall=808.0ms
+ 81/100 course-09 seed=41001 baseline escape=null wall=429.2ms
+ 82/100 course-09 seed=41001 sensory_outputs_silenced escape=null wall=426.9ms
+ 83/100 course-09 seed=41002 baseline escape=null wall=426.6ms
+ 84/100 course-09 seed=41002 sensory_outputs_silenced escape=null wall=412.7ms
+ 85/100 course-09 seed=41003 baseline escape=null wall=426.6ms
+ 86/100 course-09 seed=41003 sensory_outputs_silenced escape=null wall=433.9ms
+ 87/100 course-09 seed=41004 baseline escape=null wall=426.1ms
+ 88/100 course-09 seed=41004 sensory_outputs_silenced escape=null wall=434.4ms
+ 89/100 course-09 seed=41005 baseline escape=null wall=482.0ms
+ 90/100 course-09 seed=41005 sensory_outputs_silenced escape=null wall=431.5ms
+ 91/100 course-10 seed=41001 baseline escape=null wall=684.2ms
+ 92/100 course-10 seed=41001 sensory_outputs_silenced escape=null wall=688.5ms
+ 93/100 course-10 seed=41002 baseline escape=null wall=667.2ms
+ 94/100 course-10 seed=41002 sensory_outputs_silenced escape=null wall=654.9ms
+ 95/100 course-10 seed=41003 baseline escape=null wall=689.5ms
+ 96/100 course-10 seed=41003 sensory_outputs_silenced escape=null wall=705.7ms
+ 97/100 course-10 seed=41004 baseline escape=null wall=1085.9ms
+ 98/100 course-10 seed=41004 sensory_outputs_silenced escape=null wall=999.9ms
+ 99/100 course-10 seed=41005 baseline escape=null wall=686.8ms
+100/100 course-10 seed=41005 sensory_outputs_silenced escape=null wall=698.1ms
+generated 100 traces in /Users/mahmoodkhordoo/Documents/ChatGPT/fly-simulator/evidence/traces
+{
+  "status": "complete",
+  "runsExpected": 100,
+  "runsValid": 100,
+  "failures": [],
+  "baselineHitSensitivity": {
+    "escaped": 20,
+    "total": 20,
+    "fraction": 1.0
+  },
+  "baselineNearMissSpecificity": {
+    "stayed": 0,
+    "total": 20,
+    "fraction": 0.0
+  },
+  "classificationAcceptance": false,
+  "interventionSensorySpikes": 216325,
+  "interventionSensoryNeuronsStillSpike": true
+}

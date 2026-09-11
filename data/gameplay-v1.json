@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "units": {"position": "m", "time": "ms"},
+  "coordinates": {"forward": "+Z", "up": "+Y", "right": "+X"},
+  "observerBodyRadiusM": 0.006,
+  "dodge": {
+    "distanceM": 0.03,
+    "durationMs": 120,
+    "direction": "opposite the object's X offset at input onset; +X when the offset is zero",
+    "motion": "constant lateral velocity, then hold final position"
+  },
+  "latestGuaranteedDodgeStartAfterOnsetMs": 400,
+  "collision": {
+    "algorithm": "analytic closest approach over each piecewise-linear relative-motion segment",
+    "touchingCountsAsCollision": true
+  }
+}

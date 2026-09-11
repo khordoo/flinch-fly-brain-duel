@@ -1,0 +1,47 @@
+{
+  "automatedInput": true,
+  "checks": [
+    "false start",
+    "Space input",
+    "held key",
+    "stay collision",
+    "two practices",
+    "four rounds",
+    "summary",
+    "download",
+    "repeat play",
+    "focus invalidation"
+  ],
+  "results": [
+    {
+      "round": 0,
+      "metric": "182 ms elapsed",
+      "outcome": "ESCAPED"
+    },
+    {
+      "round": 1,
+      "metric": "174 ms elapsed",
+      "outcome": "ESCAPED"
+    },
+    {
+      "round": 2,
+      "metric": "— ms elapsed",
+      "outcome": "COLLISION"
+    },
+    {
+      "round": 3,
+      "metric": "174 ms elapsed",
+      "outcome": "ESCAPED"
+    },
+    {
+      "round": 4,
+      "metric": "174 ms elapsed",
+      "outcome": "ESCAPED"
+    },
+    {
+      "round": 5,
+      "metric": "173 ms elapsed",
+      "outcome": "ESCAPED"
+    }
+  ]
+}

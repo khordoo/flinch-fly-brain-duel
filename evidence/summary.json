@@ -1,0 +1,19 @@
+{
+  "status": "complete",
+  "runsExpected": 100,
+  "runsValid": 100,
+  "failures": [],
+  "baselineHitSensitivity": {
+    "escaped": 20,
+    "total": 20,
+    "fraction": 1.0
+  },
+  "baselineNearMissSpecificity": {
+    "stayed": 0,
+    "total": 20,
+    "fraction": 0.0
+  },
+  "classificationAcceptance": false,
+  "interventionSensorySpikes": 216325,
+  "interventionSensoryNeuronsStillSpike": true
+}

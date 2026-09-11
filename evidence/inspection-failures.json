@@ -1,0 +1,16 @@
+[
+  {
+    "candidate": "fruit-fly-lab",
+    "commit": "26672e06427c12c61536ce1bd93dae7442944681",
+    "command": ".venv/bin/python -m pytest -q",
+    "result": "13 passed, 7 failed, 54 errors",
+    "blocker": "The Python engine requires original or derived FlyWire source files that are absent from the repository. The configured source_dir is a maintainer-specific Windows path, and build_connectome reports 'Connectome not built'."
+  },
+  {
+    "candidate": "fruit-fly-lab",
+    "commit": "26672e06427c12c61536ce1bd93dae7442944681",
+    "command": "git ls-files | rg -i '(^|/)(license|copying|notice)(\\.|$)'",
+    "result": "no matches",
+    "blocker": "No tracked software license was found, so its source cannot be copied into FLINCH. Bundled web binaries were inspected only."
+  }
+]

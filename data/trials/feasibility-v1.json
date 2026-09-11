@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "units": {"position": "m", "velocity": "m/s", "time": "ms"},
+  "coordinates": {"forward": "+Z", "up": "+Y", "right": "+X"},
+  "observer": {"position": [0.0, 0.0, 0.0], "forward": [0.0, 0.0, 1.0], "up": [0.0, 1.0, 0.0]},
+  "bodyRadius": 0.006,
+  "trials": [
+    {"id":"course-01","onsetMs":100,"durationMs":800,"object":{"position":[0.000,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-02","onsetMs":100,"durationMs":800,"object":{"position":[0.004,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-03","onsetMs":100,"durationMs":800,"object":{"position":[-0.008,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-04","onsetMs":100,"durationMs":800,"object":{"position":[0.010,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-05","onsetMs":100,"durationMs":800,"object":{"position":[0.014,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-06","onsetMs":100,"durationMs":800,"object":{"position":[-0.018,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-07","onsetMs":100,"durationMs":800,"object":{"position":[0.025,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-08","onsetMs":100,"durationMs":800,"object":{"position":[-0.040,0.000,0.240],"velocity":[0.000,0.000,-0.450],"radius":0.006}},
+    {"id":"course-09","onsetMs":100,"durationMs":800,"object":{"position":[0.080,0.000,0.180],"velocity":[0.000,0.000,0.000],"radius":0.006}},
+    {"id":"course-10","onsetMs":100,"durationMs":800,"object":{"position":[0.020,0.000,0.100],"velocity":[0.000,0.000,0.300],"radius":0.006}}
+  ]
+}
