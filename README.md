@@ -1,6 +1,8 @@
 # FLINCH: You vs. a simulated fly brain
 
-A playable escape duel against a connectome-based fly model, with an interactive normal/silenced circuit replay. Local demo; nothing is posted or deployed.
+A playable escape duel against a connectome-based fly model, with an interactive normal/silenced circuit replay.
+
+**[Play FLINCH in your browser](https://flinch-fly-brain-duel.vercel.app)**
 
 Created by Mahmood Khordoo.
 
