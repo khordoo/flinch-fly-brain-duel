@@ -2,6 +2,8 @@
 
 A playable escape duel against a connectome-based fly model, with an interactive normal/silenced circuit replay. Local demo; nothing is posted or deployed.
 
+Created by Mahmood Khordoo.
+
 ![FLINCH circuit replay](evidence/demo/restore.png)
 
 ```sh
@@ -24,4 +26,4 @@ The video captures normal → silenced → restored simulations. It makes no cla
 
 Read [the backend decision](docs/BACKEND-DECISION.md) for model provenance and [implementation notes](docs/IMPLEMENTATION.md) for the shipped scope.
 
-FLINCH source code is MIT licensed. The bundled neural evidence is derived from the \`male-cns:v1.0\` dataset and remains CC BY 4.0; full attribution and transformations are documented in the backend decision.
+FLINCH source code is copyright © 2026 Mahmood Khordoo and released under the MIT License. The bundled neural evidence is derived from the `male-cns:v1.0` dataset and remains CC BY 4.0; full attribution and transformations are documented in the backend decision.
