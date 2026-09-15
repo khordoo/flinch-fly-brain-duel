@@ -27,6 +27,15 @@ export class WingSound {
  gain.linearRampToValueAtTime(.07,now+.045);
  gain.setTargetAtTime(.025,now+.085,.09);
  }
+ collision(){
+  if(!this.enabled)return;
+  this.unlock();
+  if(!this.context)return;
+  const now=this.context.currentTime,oscillator=this.context.createOscillator(),gain=this.context.createGain(),filter=this.context.createBiquadFilter();
+  oscillator.type='triangle';oscillator.frequency.setValueAtTime(210,now);oscillator.frequency.exponentialRampToValueAtTime(82,now+.19);
+  filter.type='lowpass';filter.frequency.value=950;gain.gain.setValueAtTime(.11,now);gain.gain.exponentialRampToValueAtTime(.0001,now+.22);
+  oscillator.connect(filter);filter.connect(gain);gain.connect(this.context.destination);oscillator.start(now);oscillator.stop(now+.23);
+ }
  test(){
   if(!this.enabled)return;
   this.unlock();
