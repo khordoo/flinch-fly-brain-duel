@@ -19,8 +19,10 @@ type State='loading'|'ready'|'armed'|'running'|'resolved'|'summary'|'replay';
 type Result={pairId:string;seed:number;trialHash:string;humanMs:number|null;inputMethod:string|null;humanSurvived:boolean;modelSurvived:boolean;modelMs:number|null;practice:boolean;valid:boolean;reason?:string;maxFrameGapMs:number};
 let catalog:Catalog,pair:Pair,arena:Arena,anatomy:Anatomy;
 let state:State='loading',sessionSeed=crypto.getRandomValues(new Uint32Array(1))[0],order:Pair[]=[],round=0,practice=true,practiceRound=0,results:Result[]=[],human:number|null=null,inputMethod:string|null=null;
-let held=false,armAt=0,onset=0,lastFrame=0,maxGap=0,runTime=-1,resolveAt=0,replayAt=0,replayT=0,replayPaused=false,intervention=false,returnState:State='ready',replayKind:'circuit'|'duel'='circuit';
+let held=false,armAt=0,waveCueUntil=0,onset=0,lastFrame=0,maxGap=0,runTime=-1,resolveAt=0,replayAt=0,replayT=0,replayPaused=false,intervention=false,returnState:State='ready',replayKind:'circuit'|'duel'='circuit';
 const gaps:number[]=[];let lastUi=0;const horizon=()=>pair.trial.durationMs-pair.trial.onsetMs;
+const currentWave=()=>Math.floor(round/5)+1;
+const waveLevel=()=>Math.min(4,currentWave()-1);
 function say(text:string){$('#status').innerHTML=text}
 function show(id:string,yes:boolean){$(id).classList.toggle('hidden',!yes)}
 function banner(text:string){$('#live-status').textContent=text;show('#live-status',!!text)}
@@ -28,7 +30,7 @@ function metric(id:string,value:number|null,unit:string){$(id).innerHTML=`${valu
 function outcome(id:string,success:boolean){$(id).textContent=success?'ESCAPED':'COLLISION';$(id).classList.toggle('hit',!success)}
 function resetLabels(){ $('#left-title').textContent='YOU';$('#right-title').textContent='SIMULATED FLY';$('#left-role').textContent='HUMAN CONTROL';$('#right-role').textContent='CONNECTOME CONTROL';$('#left-hint').innerHTML=`${dodgeHint}<br>One move. Make it count.`;$('#right-hint').innerHTML='Neural escape readout<br>Same threat. Same dodge.';$('#transmission').classList.remove('cut');$('#left-result').textContent='';$('#right-result').textContent='';metric('#left-metric',null,'ms elapsed');metric('#right-metric',null,'ms simulated');}
 function chooseOrder(){const ids=shuffled([...new Set(catalog.pairs.map(p=>p.id))],sessionSeed);order=ids.map((id,i)=>shuffled(catalog.pairs.filter(p=>p.id===id),sessionSeed+i)[0]);}
-function arm(){if(continuous){$('#mode-label').textContent='CONTINUOUS';} (document.activeElement as HTMLElement)?.blur();state='armed';human=null;inputMethod=null;maxGap=0;runTime=-1;armAt=performance.now()+800+((sessionSeed+round*347+practiceRound*181)%801);resetLabels();show('#card',false);show('#next',false);show('#dodge',true);show('#replay-controls',false);show('#intervene',false);show('#play-replay',false);$('#inspect').setAttribute('disabled','');banner(held?'RELEASE SPACE':'GET READY');say(practice?`<strong>Practice ${practiceRound+1} / 2.</strong> Wait for the object, then ${touchFirst?'tap the arena or Dodge':'press Space or tap Dodge'}.`:`Wait for the object. <strong>${touchFirst?'Tap the arena to dodge.':'Space to dodge.'}</strong>`);$('#stage-caption').textContent=practice?` / PRACTICE ${practiceRound+1} OF 2`:` / ROUND ${round+1} OF ${order.length}`;document.querySelectorAll('.round-dots i').forEach((e,i)=>{e.classList.toggle('active',!practice&&i===round);e.classList.toggle('done',!practice&&i<round)});}
+function arm(){if(continuous){$('#mode-label').textContent='CONTINUOUS';} (document.activeElement as HTMLElement)?.blur();state='armed';human=null;inputMethod=null;maxGap=0;runTime=-1;const pace=continuous?waveLevel():0,waitMin=800-pace*70,waitRange=801-pace*70;armAt=performance.now()+waitMin+((sessionSeed+round*347+practiceRound*181)%waitRange);resetLabels();show('#card',false);show('#next',false);show('#dodge',true);show('#replay-controls',false);show('#intervene',false);show('#play-replay',false);$('#inspect').setAttribute('disabled','');banner(held?'RELEASE SPACE':'GET READY');say(practice?`<strong>Practice ${practiceRound+1} / 2.</strong> Wait for the object, then ${touchFirst?'tap the arena or Dodge':'press Space or tap Dodge'}.`:`Wait for the object. <strong>${touchFirst?'Tap the arena to dodge.':'Space to dodge.'}</strong>`);$('#stage-caption').textContent=practice?` / PRACTICE ${practiceRound+1} OF 2`:` / ROUND ${round+1} OF ${order.length}`;document.querySelectorAll('.round-dots i').forEach((e,i)=>{e.classList.toggle('active',!practice&&i===round);e.classList.toggle('done',!practice&&i<round)});}
 function start(){if(state==='loading')return;continuous=false;$('#mode-label').textContent='ESCAPE DUEL';results=[];sessionSeed=crypto.getRandomValues(new Uint32Array(1))[0];chooseOrder();round=0;practice=true;practiceRound=0;pair=order[0];show('#score',false);arm();}
 function snapshot(valid=true,reason?:string):Result{return {pairId:pair.id,seed:pair.seed,trialHash:pair.trialHash,humanMs:human,inputMethod,humanSurvived:clearance(pair.trial,human)>0,modelSurvived:clearance(pair.trial,latency(pair.normal))>0,modelMs:latency(pair.normal),practice,valid,reason,maxFrameGapMs:maxGap}}
 function invalidate(reason:string){if(state!=='armed'&&state!=='running')return;results.push(snapshot(false,reason));state='resolved';show('#dodge',false);show('#next',true);$('#next').textContent='Retry this round →';$('#next').dataset.retry='true';banner('ROUND NOT SCORED');say(`${reason}. Your attempt is saved as invalid; retry when ready.`);}
@@ -57,6 +59,7 @@ function timeline(trace:Trace,t:number,reveal:boolean){const canvas=$<HTMLCanvas
  const escape=latency(trace);if(escape!==null&&t>=escape){ctx.strokeStyle='#ffc578';ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(escape/horizon()*r.width,0);ctx.lineTo(escape/horizon()*r.width,r.height);ctx.stroke();ctx.setLineDash([])}ctx.strokeStyle='#e8eff5';ctx.beginPath();ctx.moveTo(t/horizon()*r.width,0);ctx.lineTo(t/horizon()*r.width,r.height);ctx.stroke();$('#circuit-state').textContent=`${Math.round(t)} ms · ${intervention&&state==='replay'?'Silenced outputs':'Recorded populations'}`;
 }
 function frame(now:number){requestAnimationFrame(frame);const dt=lastFrame?now-lastFrame:0;lastFrame=now;if(!arena||!pair)return;continuousTick(now);wingSound.update((['armed','running','resolved'].includes(state)||(state==='replay'&&!replayPaused))&&!$<HTMLDialogElement>('#methods-dialog').open);
+ if(state==='armed'&&waveCueUntil&&now>=waveCueUntil){waveCueUntil=0;banner(held?'RELEASE SPACE':'GET READY');}
  if(state==='armed'&&now>=armAt&&!held){state='running';onset=performance.now();runTime=0;maxGap=0;banner('');}
  else if(state==='running'){runTime=now-onset;maxGap=Math.max(maxGap,dt);gaps.push(dt);if(gaps.length>4000)gaps.shift();if(dt>50&&human===null){invalidate('Frame gap exceeded 50 ms');return}if(runTime>=horizon())resolve();}
  let t=state==='running'?runTime:state==='resolved'||state==='summary'?horizon():-1;let actions:(number|null)[]=[human,latency(pair.normal)];let reveal=state==='resolved'||state==='summary'||state==='replay';let visible=state==='running'||reveal;let trace=pair.normal;
@@ -79,13 +82,13 @@ function selectMode(mode:'continuous'|'classic'){
  selectedMode=mode;
  if(state==='ready'){
   $('#mode-label').textContent=mode==='continuous'?'CONTINUOUS':'ESCAPE DUEL';
-  $('#card-mini').textContent=mode==='continuous'?`${touchFirst?'Tap the arena':'Space or tap'} to dodge · Automatic next threats`:`2 practice runs · 4 scored rounds · ${touchFirst?'Tap the arena':'Space or tap'} to dodge`;
+  $('#card-mini').textContent=mode==='continuous'?`${touchFirst?'Tap the arena':'Space or tap'} to dodge · Faster every 5 threats`:`2 practice runs · 4 scored rounds · ${touchFirst?'Tap the arena':'Space or tap'} to dodge`;
  }
 }
 continuousButton.onclick=()=>selectMode('continuous');classicButton.onclick=()=>selectMode('classic');finishButton.onclick=finishContinuous;
 const streakDisplay=document.createElement('span');streakDisplay.id='streaks';streakDisplay.className='continuous-streaks hidden';$('.stage-bar').append(streakDisplay);
 const continuousNote=document.createElement('p');
-continuousNote.textContent=`Continuous mode automatically chains independent trials at the original speed, resetting the scene and neural trace for each threat. Collisions reset your streak; play continues. ${touchFirst?'Tapping the arena or Dodge escapes; Finish run ends':'Space or Dodge escapes; Esc or Finish run ends'} the session. This mode does not simulate a continuously adapting brain.`;
+continuousNote.textContent=`Continuous mode automatically chains independent trials at the original threat speed, resetting the scene and neural trace each time. A new wave every five threats shortens the recovery and ready periods; the recorded trajectory and neural timing stay unchanged. Collisions reset your streak; play continues. ${touchFirst?'Tapping the arena or Dodge escapes; Finish run ends':'Space or Dodge escapes; Esc or Finish run ends'} the session. This mode does not simulate a continuously adapting brain.`;
 $('#performance').before(continuousNote);
 function startContinuous(){
  if(!catalog||!arena)return;
@@ -94,8 +97,9 @@ function startContinuous(){
  $('#card-kicker').textContent='CONTINUOUS MODE';
 }
 function advanceContinuous(){
- round++;if(round>=order.length)order.push(...shuffled(catalog.pairs,sessionSeed+round));
+ const previousWave=currentWave();round++;if(round>=order.length)order.push(...shuffled(catalog.pairs,sessionSeed+round));
  pair=order[round];arm();
+ if(currentWave()>previousWave){waveCueUntil=performance.now()+450;armAt+=450;banner(`WAVE ${currentWave()}`);say(`<strong>Wave ${currentWave()}.</strong> ${currentWave()<=5?'The cadence is increasing.':'Maximum cadence.'} Threat speed and neural timing remain matched.`);}
 }
 function finishContinuous(){
  if(state==='running'||state==='armed')results.push(snapshot(false,'Session ended before trial completion'));
@@ -114,8 +118,9 @@ function continuousTick(now:number){
   const rs=results.filter(r=>r.valid&&!r.practice);
   const streak=(key:'humanSurvived'|'modelSurvived')=>{let n=0;for(let i=rs.length-1;i>=0&&rs[i][key];i--)n++;return n};
   streakDisplay.textContent=`STREAK  YOU ${streak('humanSurvived')} · MODEL ${streak('modelSurvived')}`;
-  if(active)$('#stage-caption').textContent=` / THREAT ${round+1} · ${touchFirst?'TAP TO DODGE':'SPACE TO DODGE'}`;
-  if(state==='resolved'&&$('#next').dataset.retry!=='true'&&now-resolveAt>=1100&&!document.hidden&&!$<HTMLDialogElement>('#methods-dialog').open)advanceContinuous();
+  if(active)$('#stage-caption').textContent=` / WAVE ${currentWave()} · THREAT ${round+1} · ${touchFirst?'TAP TO DODGE':'SPACE TO DODGE'}`;
+  const recovery=Math.max(620,1100-waveLevel()*120);
+  if(state==='resolved'&&$('#next').dataset.retry!=='true'&&now-resolveAt>=recovery&&!document.hidden&&!$<HTMLDialogElement>('#methods-dialog').open)advanceContinuous();
  }
 }
 document.addEventListener('keydown',e=>{
