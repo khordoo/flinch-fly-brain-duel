@@ -18,9 +18,9 @@ export class Arena {
  const rim=new T.DirectionalLight(0xb8ddff,2.4);rim.position.set(.08,.045,.07);s.add(rim);
  const fill=new T.DirectionalLight(0xd5e6f2,1.3);fill.position.set(.04,.025,-.1);s.add(fill);
  const camera=new T.PerspectiveCamera(49,1,.001,3);camera.position.set(0,.037,-.093);camera.lookAt(0,.008,.065);
- const grid=new T.GridHelper(1,40,0x62a5c9,0x294e69);grid.position.set(0,-.01,.35);s.add(grid);
- for(let x of [-.065,.065]){const line=new T.BufferGeometry().setFromPoints([new T.Vector3(x,-.009,-.03),new T.Vector3(x,-.009,.8)]);s.add(new T.Line(line,new T.LineBasicMaterial({color:0x70b8dc,transparent:true,opacity:.82})));}
- for(let z=.12;z<.9;z+=.14){const points=[new T.Vector3(-.085,-.01,z),new T.Vector3(-.085,.07,z),new T.Vector3(.085,.07,z),new T.Vector3(.085,-.01,z)];s.add(new T.Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:0x477b9b,transparent:true,opacity:.72})));}
+ const grid=new T.GridHelper(1,40,0xa0e8ff,0x4f94ba);grid.position.set(0,-.01,.35);s.add(grid);
+ for(let x of [-.065,.065]){const line=new T.BufferGeometry().setFromPoints([new T.Vector3(x,-.009,-.03),new T.Vector3(x,-.009,.8)]);s.add(new T.Line(line,new T.LineBasicMaterial({color:0xb7efff,transparent:true,opacity:.98})));}
+ for(let z=.12;z<.9;z+=.14){const points=[new T.Vector3(-.085,-.01,z),new T.Vector3(-.085,.07,z),new T.Vector3(.085,.07,z),new T.Vector3(.085,-.01,z)];s.add(new T.Line(new T.BufferGeometry().setFromPoints(points),new T.LineBasicMaterial({color:0x6fb9dc,transparent:true,opacity:.92})));}
  const f=fly(color);s.add(f);const rock=new T.Mesh(new T.IcosahedronGeometry(.006,2),new T.MeshStandardMaterial({color:0x9fa8b2,metalness:.8,roughness:.32,flatShading:true}));s.add(rock);rock.visible=false;
  const ring=new T.Mesh(new T.RingGeometry(.008,.00815,64),new T.MeshBasicMaterial({color,transparent:true,opacity:.3,side:T.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=-.0095;s.add(ring);
  this.scenes.push(s);this.cameras.push(camera);this.flies.push(f);this.rocks.push(rock);this.rings.push(ring);}
