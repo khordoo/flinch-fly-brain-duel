@@ -4,7 +4,7 @@ A playable escape duel against a connectome-based fly model, with an interactive
 
 **[Play FLINCH in your browser](https://flinch-fly-brain-duel.vercel.app)**
 
-![FLINCH circuit replay](evidence/demo/restore.png)
+![FLINCH gameplay preview](public/flinch-preview.jpeg)
 
 ```sh
 npm install
