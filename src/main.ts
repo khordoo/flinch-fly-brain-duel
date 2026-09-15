@@ -146,9 +146,12 @@ function updateResultDots(){
  }
 }
 const wingSound=new WingSound();
-const soundButton=document.createElement('button');soundButton.id='sound';soundButton.textContent='Sound: on';soundButton.setAttribute('aria-label','Toggle fly sound');soundButton.setAttribute('aria-pressed','true');
+const soundIcon=(enabled:boolean)=>enabled?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>`:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="m16 9 5 5m0-5-5 5"/></svg>`;
+const soundButton=document.createElement('button');soundButton.id='sound';soundButton.className='sound-toggle';
+function renderSoundButton(){soundButton.innerHTML=`${soundIcon(wingSound.enabled)}<span>Sound ${wingSound.enabled?'on':'off'}</span>`;soundButton.setAttribute('aria-label',wingSound.enabled?'Turn sound off':'Turn sound on');soundButton.setAttribute('aria-pressed',String(wingSound.enabled));}
+renderSoundButton();
 $('.mast-right').prepend(soundButton);
-soundButton.onclick=()=>{wingSound.enabled=!wingSound.enabled;soundButton.textContent=wingSound.enabled?'Sound: on':'Sound: off';soundButton.setAttribute('aria-pressed',String(wingSound.enabled));if(wingSound.enabled)wingSound.test();else wingSound.update(false)};
+soundButton.onclick=()=>{wingSound.enabled=!wingSound.enabled;renderSoundButton();if(wingSound.enabled)wingSound.test();else wingSound.update(false)};
 document.addEventListener('pointerdown',()=>wingSound.unlock());
 document.addEventListener('keydown',()=>wingSound.unlock());
 document.addEventListener('visibilitychange',()=>{if(document.hidden)wingSound.update(false)});
