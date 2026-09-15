@@ -117,7 +117,7 @@ function continuousTick(now:number){
  if(continuous){
   const rs=results.filter(r=>r.valid&&!r.practice);
   const streak=(key:'humanSurvived'|'modelSurvived')=>{let n=0;for(let i=rs.length-1;i>=0&&rs[i][key];i--)n++;return n};
-  streakDisplay.textContent=`STREAK  YOU ${streak('humanSurvived')} · MODEL ${streak('modelSurvived')}`;
+  streakDisplay.innerHTML=`STREAK: <span class="you">YOU <b>${streak('humanSurvived')}</b></span> · <span class="model">MODEL <b>${streak('modelSurvived')}</b></span>`;
   if(active)$('#stage-caption').textContent=` / WAVE ${currentWave()} · THREAT ${round+1} · ${touchFirst?'TAP TO DODGE':'SPACE TO DODGE'}`;
   const recovery=Math.max(620,1100-waveLevel()*120);
   if(state==='resolved'&&$('#next').dataset.retry!=='true'&&now-resolveAt>=recovery&&!document.hidden&&!$<HTMLDialogElement>('#methods-dialog').open)advanceContinuous();
