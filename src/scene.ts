@@ -1,18 +1,22 @@
 import * as T from 'three';
 import {dodgeX,type Trial,clamp} from './core';
 function fly(color:number){
- const g=new T.Group(),body=new T.MeshStandardMaterial({color:0x222e3a,metalness:.75,roughness:.35});
+ const g=new T.Group(),body=new T.MeshPhysicalMaterial({color:0x465969,metalness:.55,roughness:.3,clearcoat:.65,clearcoatRoughness:.2});
  const mesh=(geo:T.BufferGeometry,mat:T.Material,scale:[number,number,number],pos:[number,number,number])=>{const m=new T.Mesh(geo,mat);m.scale.set(...scale);m.position.set(...pos);g.add(m);return m};
  const sphere=new T.SphereGeometry(1,24,16);
  mesh(sphere,body,[.0035,.0032,.007],[0,0,0]);mesh(sphere,body,[.004,.0036,.0035],[0,.001,.006]);
- const eye=new T.MeshStandardMaterial({color,emissive:color,emissiveIntensity:.65,roughness:.25});
- for(const s of [-1,1]){mesh(sphere,eye,[.0017,.002,.002],[s*.003,.002,.007]);const wing=mesh(sphere,new T.MeshPhysicalMaterial({color:0xc8e5ed,transparent:true,opacity:.45,metalness:.35,roughness:.1,side:T.DoubleSide}),[.011,.00022,.0048],[s*.009,.003,0]);wing.rotation.y=s*-.45;wing.name='wing';for(let i=0;i<3;i++){const curve=new T.BufferGeometry().setFromPoints([new T.Vector3(s*.002,-.001,.004-i*.003),new T.Vector3(s*.006,-.004,.002-i*.003),new T.Vector3(s*.007,-.006,-i*.003)]);g.add(new T.Line(curve,new T.LineBasicMaterial({color:0x71818d})));}}
+ const eye=new T.MeshPhysicalMaterial({color,emissive:color,emissiveIntensity:.25,roughness:.26,metalness:.2,clearcoat:.85,clearcoatRoughness:.12,flatShading:true});
+ const eyeGeometry=new T.IcosahedronGeometry(1,3);
+ for(const s of [-1,1]){mesh(eyeGeometry,eye,[.0018,.0021,.0021],[s*.003,.002,.007]);const wing=mesh(sphere,new T.MeshPhysicalMaterial({color:0xc8e5ed,transparent:true,opacity:.45,metalness:.35,roughness:.1,side:T.DoubleSide}),[.011,.00022,.0048],[s*.009,.003,0]);wing.rotation.y=s*-.45;wing.name='wing';for(let i=0;i<3;i++){const curve=new T.BufferGeometry().setFromPoints([new T.Vector3(s*.002,-.001,.004-i*.003),new T.Vector3(s*.006,-.004,.002-i*.003),new T.Vector3(s*.007,-.006,-i*.003)]);g.add(new T.Line(curve,new T.LineBasicMaterial({color:0x9bafbd})));}}
  return g;
 }
 export class Arena {
  renderer:T.WebGLRenderer; scenes:T.Scene[]=[]; cameras:T.PerspectiveCamera[]=[]; flies:T.Group[]=[]; rocks:T.Mesh[]=[]; rings:T.Mesh[]=[]; hosts:HTMLElement[];canvas:HTMLCanvasElement;
  constructor(host:HTMLElement,lanes:HTMLElement[]){this.hosts=lanes;this.renderer=new T.WebGLRenderer({antialias:true,alpha:true});this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.setClearColor(0x090d14,0);this.canvas=this.renderer.domElement;host.prepend(this.canvas);this.canvas.className='arena-canvas';this.renderer.setScissorTest(true);
  for(let i=0;i<2;i++){const color=i?0xffc578:0x66deff,s=new T.Scene();s.fog=new T.FogExp2(0x090d14,6);s.add(new T.HemisphereLight(0xdcefff,0x101519,3));const light=new T.DirectionalLight(0xffffff,4);light.position.set(-.1,.2,-.1);s.add(light);const accent=new T.PointLight(color,.6,1,1);accent.position.set(.04,.02,-.02);s.add(accent);
+ // A cool rim and broad camera-side fill separate the shell from the dark runway.
+ const rim=new T.DirectionalLight(0xb8ddff,2.4);rim.position.set(.08,.045,.07);s.add(rim);
+ const fill=new T.DirectionalLight(0xd5e6f2,1.3);fill.position.set(.04,.025,-.1);s.add(fill);
  const camera=new T.PerspectiveCamera(49,1,.001,3);camera.position.set(0,.037,-.093);camera.lookAt(0,.008,.065);
  const grid=new T.GridHelper(1,40,0x62a5c9,0x294e69);grid.position.set(0,-.01,.35);s.add(grid);
  for(let x of [-.065,.065]){const line=new T.BufferGeometry().setFromPoints([new T.Vector3(x,-.009,-.03),new T.Vector3(x,-.009,.8)]);s.add(new T.Line(line,new T.LineBasicMaterial({color:0x70b8dc,transparent:true,opacity:.82})));}
