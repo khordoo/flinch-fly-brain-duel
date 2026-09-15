@@ -2,6 +2,7 @@ import './style.css';
 import {WingSound} from './sound';
 import {load,digest,latency,clearance,shuffled,clamp,type Catalog,type Pair,type Trace} from './core';
 import {Arena,Anatomy} from './scene';
+if(import.meta.env.PROD)void import('@vercel/analytics').then(({inject})=>inject());
 const $=<T extends HTMLElement=HTMLElement>(s:string)=>document.querySelector<T>(s)!;
 $('#app').innerHTML=`<main class="shell">
  <header class="mast"><div class="brand"><div class="wordmark">FLINCH<span style="color:var(--cyan)">.</span></div><p>You vs. a simulated<br>fly brain</p></div><div class="mast-right"><span class="mode">Precomputed neural replay</span><button class="icon-button" id="presentation" aria-label="Toggle presentation mode" title="Presentation mode">⛶</button></div></header>
