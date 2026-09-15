@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite. Space or the Dodge button controls your fly. Two practice attempts lead into four validated collision courses. Inspect circuit opens a quarter-speed replay; silence LC4/LPLC2 outputs, then restore the original baseline. The top-right button enters full-screen presentation mode. Save result downloads local attempt logs. Replay URLs preserve the selected threat, seed and circuit condition.
+Open the URL printed by Vite and click Start playing. Continuous mode is selected by default: Space or the Dodge button controls your fly, threats follow automatically, and Esc or Finish run ends the session. Select Classic duel on the left for two practice attempts followed by four scored rounds. Inspect circuit on the right opens a quarter-speed replay; silence LC4/LPLC2 outputs, then restore the original baseline. The top-right full-screen button enters presentation mode. Save result downloads local attempt logs. Replay URLs preserve the selected threat, seed and circuit condition.
 
 The existing trace bank is already packaged under `public/data/flinch/`. `npm run pack` repackages saved evidence without running Java. No neural recalibration is needed to run the frontend. `npm run build` creates a static `dist/` build. `npm test` checks geometry, trace validation and null outcomes. `node tools/browser-check.mjs` and `node tools/full-flow-check.mjs` use installed Chrome for browser verification while Vite runs.
 

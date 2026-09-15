@@ -1,7 +1,7 @@
 import {chromium} from '@playwright/test';
 import fs from 'node:fs/promises';
 const browser=await chromium.launch({channel:'chrome',headless:true});
-const page=await browser.newPage({viewport:{width:1280,height:800}});await page.goto('http://127.0.0.1:5173');await page.getByRole('button',{name:'Enter the experiment'}).click();
+const page=await browser.newPage({viewport:{width:1280,height:800}});await page.goto('http://127.0.0.1:5173');await page.locator('#classic').click();await page.getByRole('button',{name:'Start playing'}).click();
 await page.keyboard.press('Space');await page.getByRole('button',{name:'Retry this round'}).waitFor();
 await page.getByRole('button',{name:'Retry this round'}).click();
 const results=[];
